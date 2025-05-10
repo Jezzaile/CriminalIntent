@@ -6,16 +6,23 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.EditText
 import androidx.fragment.app.Fragment
 
 class CrimeFragment: Fragment(){
     private lateinit var crime: Crime
     private lateinit var titleField: EditText
+    private lateinit var dateButton: Button
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         crime = Crime()
         titleField = view?.findViewById<EditText>(R.id.crime_title)!!
+        dateButton = view?.findViewById(R.id.crime_date)!!
+        dateButton.apply {
+            text = crime.date.toString()
+            isEnabled = false
+        }
     }
 
     override fun onCreateView(
