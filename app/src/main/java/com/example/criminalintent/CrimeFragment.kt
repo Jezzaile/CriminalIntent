@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.CheckBox
 import android.widget.EditText
 import androidx.fragment.app.Fragment
 
@@ -14,15 +15,17 @@ class CrimeFragment: Fragment(){
     private lateinit var crime: Crime
     private lateinit var titleField: EditText
     private lateinit var dateButton: Button
+    private lateinit var solvedCheckBox: CheckBox
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         crime = Crime()
         titleField = view?.findViewById<EditText>(R.id.crime_title)!!
-        dateButton = view?.findViewById(R.id.crime_date)!!
+        dateButton = view?.findViewById<Button>(R.id.crime_date)!!
         dateButton.apply {
             text = crime.date.toString()
             isEnabled = false
         }
+        solvedCheckBox = view?.findViewById<CheckBox>(R.id.crime_solved)!!
     }
 
     override fun onCreateView(
@@ -49,6 +52,9 @@ class CrimeFragment: Fragment(){
             override fun afterTextChanged(s: Editable?) {
                 TODO("Not yet implemented")
             }
+        }
+        solvedCheckBox.apply { 
+            setOnCheckedChangeListener { _, isChecked -> crime.isSolved = isChecked }
         }
         titleField.addTextChangedListener(titleWatcher)
     }
