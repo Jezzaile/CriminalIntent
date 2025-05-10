@@ -19,13 +19,6 @@ class CrimeFragment: Fragment(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         crime = Crime()
-        titleField = view?.findViewById<EditText>(R.id.crime_title)!!
-        dateButton = view?.findViewById<Button>(R.id.crime_date)!!
-        dateButton.apply {
-            text = crime.date.toString()
-            isEnabled = false
-        }
-        solvedCheckBox = view?.findViewById<CheckBox>(R.id.crime_solved)!!
     }
 
     override fun onCreateView(
@@ -34,6 +27,13 @@ class CrimeFragment: Fragment(){
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_crime, container, false)
+        titleField = view.findViewById<EditText>(R.id.crime_title)
+        dateButton = view.findViewById<Button>(R.id.crime_date)
+        dateButton.apply {
+            text = crime.date.toString()
+            isEnabled = false
+        }
+        solvedCheckBox = view.findViewById<CheckBox>(R.id.crime_solved)
         return view
     }
 
