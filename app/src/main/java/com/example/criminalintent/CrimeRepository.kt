@@ -1,6 +1,7 @@
 package com.example.criminalintent
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.room.Room
 import com.example.criminalintent.database.CrimeDatabase
@@ -20,7 +21,6 @@ class CrimeRepository private constructor(context: Context){
     fun getCrime(uuid: UUID): LiveData<Crime?>{
         return  crimeDao.getCrime(uuid)
     }
-
     companion object{
         private var INSTANCE: CrimeRepository? = null
 
