@@ -10,4 +10,6 @@ import com.example.criminalintent.Crime
     version = 1
 )
 @TypeConverters(CrimeTypeConverters::class)
-abstract class CrimeDatabase: RoomDatabase(){}
+abstract class CrimeDatabase: RoomDatabase(){
+    abstract fun crimeDAO(): CrimeDAO
+}
