@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider
 import java.util.UUID
 
 private const val ARG_CRIME_ID = "crime_id"
+private const val DIALOG_DATE = "dialog_date"
 class CrimeFragment: Fragment(){
     private lateinit var crime: Crime
     private lateinit var titleField: EditText
@@ -43,10 +44,10 @@ class CrimeFragment: Fragment(){
         val view = inflater.inflate(R.layout.fragment_crime, container, false)
         titleField = view.findViewById(R.id.crime_title)
         dateButton = view.findViewById(R.id.crime_date)
-        dateButton.apply {
-            text = crime.date.toString()
-            isEnabled = false
-        }
+//        dateButton.apply {
+//            text = crime.date.toString()
+//            isEnabled = false
+//        }
         solvedCheckBox = view.findViewById(R.id.crime_solved)
         return view
     }
@@ -81,6 +82,11 @@ class CrimeFragment: Fragment(){
         }
         solvedCheckBox.apply { 
             setOnCheckedChangeListener { _, isChecked -> crime.isSolved = isChecked }
+        }
+        dateButton.setOnClickListener{
+            DatePickerFragment().apply {
+                show(this@CrimeFragment.parentFragmentManager, DIALOG_DATE)
+            }
         }
         titleField.addTextChangedListener(titleWatcher)
     }
