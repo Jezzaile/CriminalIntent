@@ -4,7 +4,6 @@ import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +11,6 @@ import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import java.util.UUID
 
@@ -30,6 +28,7 @@ class CrimeFragment: Fragment(){
         val crimeId:UUID = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             arguments?.getSerializable(ARG_CRIME_ID, UUID::class.java) as UUID
         } else {
+            @Suppress("DEPRECATION")
             arguments?.getSerializable(ARG_CRIME_ID) as UUID
         }
         crimeDetailViewModel.loadCrime(crimeId)
@@ -42,13 +41,13 @@ class CrimeFragment: Fragment(){
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_crime, container, false)
-        titleField = view.findViewById<EditText>(R.id.crime_title)
-        dateButton = view.findViewById<Button>(R.id.crime_date)
+        titleField = view.findViewById(R.id.crime_title)
+        dateButton = view.findViewById(R.id.crime_date)
         dateButton.apply {
             text = crime.date.toString()
             isEnabled = false
         }
-        solvedCheckBox = view.findViewById<CheckBox>(R.id.crime_solved)
+        solvedCheckBox = view.findViewById(R.id.crime_solved)
         return view
     }
 
@@ -84,6 +83,11 @@ class CrimeFragment: Fragment(){
             setOnCheckedChangeListener { _, isChecked -> crime.isSolved = isChecked }
         }
         titleField.addTextChangedListener(titleWatcher)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        crimeDetailViewModel.saveCrime(crime)
     }
     private fun updateUI(){
         titleField.setText(crime.title)
